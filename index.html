@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>CVPR 2027 Abstract Deadline Countdown</title>
+
+  <meta
+    name="description"
+    content="Personal countdown to the CVPR 2027 paper registration / abstract submission deadline."
+  />
+
+  <style>
+    :root {
+      --bg: #070b17;
+      --card: rgba(17, 24, 39, 0.72);
+      --card-border: rgba(255, 255, 255, 0.10);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --blue: #60a5fa;
+      --purple: #a78bfa;
+      --pink: #f472b6;
+      --green: #34d399;
+      --red: #fb7185;
+      --amber: #fbbf24;
+      --surface: rgba(10, 16, 31, 0.66);
+      --surface-strong: rgba(15, 23, 42, 0.82);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      color: var(--text);
+
+      background:
+        radial-gradient(
+          circle at 15% 20%,
+          rgba(96, 165, 250, 0.17),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 85% 75%,
+          rgba(167, 139, 250, 0.16),
+          transparent 34%
+        ),
+        radial-gradient(
+          circle at 55% 10%,
+          rgba(244, 114, 182, 0.08),
+          transparent 28%
+        ),
+        var(--bg);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 32px 20px;
+      overflow-x: hidden;
+    }
+
+    /* Subtle background grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+
+      background-image:
+        linear-gradient(
+          rgba(255, 255, 255, 0.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.025) 1px,
+          transparent 1px
+        );
+
+      background-size: 50px 50px;
+
+      mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.8),
+        transparent 90%
+      );
+    }
+
+    .page {
+      width: min(980px, 100%);
+      text-align: center;
+      padding: clamp(28px, 5vw, 58px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.48), rgba(7, 11, 23, 0.32));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+
+      padding: 8px 14px;
+      margin-bottom: 22px;
+
+      border: 1px solid rgba(96, 165, 250, 0.25);
+      border-radius: 999px;
+
+      background: rgba(96, 165, 250, 0.08);
+      color: #bfdbfe;
+
+      font-size: 13px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+
+      border-radius: 50%;
+
+      background: var(--blue);
+      box-shadow: 0 0 14px var(--blue);
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 82px);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      font-weight: 850;
+
+      margin-bottom: 16px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(
+        90deg,
+        #93c5fd,
+        #c4b5fd 48%,
+        #f9a8d4
+      );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+
+      color: transparent;
+    }
+
+    .subtitle {
+      max-width: 660px;
+      margin: 0 auto 38px;
+
+      color: var(--muted);
+
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.65;
+    }
+
+    .subtitle strong {
+      color: #e2e8f0;
+    }
+
+    /* -------------------------
+       COUNTDOWN
+       ------------------------- */
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .unit {
+      position: relative;
+      overflow: hidden;
+
+      min-width: 0;
+      padding: 26px 12px 22px;
+
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.70), rgba(15, 23, 42, 0.62));
+
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .unit:hover {
+      transform: translateY(-3px);
+      border-color: rgba(147, 197, 253, 0.3);
+    }
+
+    .unit::before {
+      content: "";
+
+      position: absolute;
+
+      left: 20%;
+      right: 20%;
+      top: 0;
+
+      height: 1px;
+
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(147, 197, 253, 0.7),
+        transparent
+      );
+    }
+
+    .number {
+      display: block;
+
+      font-size: clamp(38px, 6vw, 64px);
+      line-height: 1;
+
+      font-weight: 780;
+      letter-spacing: -0.045em;
+
+      font-variant-numeric: tabular-nums;
+    }
+
+    .label {
+      display: block;
+
+      margin-top: 12px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+      font-weight: 700;
+
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* -------------------------
+       DEADLINE CARDS
+       ------------------------- */
+
+    .deadline-card {
+      width: min(720px, 100%);
+
+      margin: 0 auto;
+
+      padding: 18px 22px;
+
+      background: var(--surface);
+
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+
+      color: #cbd5e1;
+
+      line-height: 1.7;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: center;
+      gap: 4px 8px;
+    }
+
+    .deadline-card strong {
+      color: white;
+    }
+
+    .personal-deadline {
+      border-color: rgba(52, 211, 153, 0.20);
+
+      box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .deadline-label {
+      flex-basis: 100%;
+      display: block;
+
+      margin-bottom: 2px;
+
+      color: var(--green);
+
+      font-size: 11px;
+      font-weight: 800;
+
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .aoe {
+      color: #93c5fd;
+      font-weight: 700;
+    }
+
+    .official-note {
+      width: min(720px, 100%);
+
+      margin: 10px auto 0;
+      padding: 11px 18px;
+
+      color: #64748b;
+
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .official-note strong {
+      color: #94a3b8;
+    }
+
+    /* -------------------------
+       STATUS
+       ------------------------- */
+
+    #status {
+      margin-top: 18px;
+
+      min-height: 26px;
+
+      font-size: 15px;
+      font-weight: 650;
+
+      color: var(--green);
+    }
+
+    #status.passed {
+      color: var(--red);
+      font-size: 18px;
+    }
+
+    /* -------------------------
+       FOOTER
+       ------------------------- */
+
+    footer {
+      margin-top: 34px;
+
+      color: #64748b;
+
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    footer a {
+      color: #94a3b8;
+
+      text-decoration: none;
+
+      border-bottom:
+        1px solid rgba(148, 163, 184, 0.3);
+
+      transition: color 0.2s ease;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    /* -------------------------
+       MOBILE
+       ------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 16px 10px;
+        align-items: flex-start;
+      }
+
+      .page {
+        padding: 28px 16px;
+        border-radius: 24px;
+      }
+
+      .badge {
+        max-width: 100%;
+        font-size: 11px;
+        letter-spacing: 0.055em;
+      }
+
+      h1 {
+        font-size: clamp(48px, 17vw, 68px);
+      }
+
+      .countdown {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .unit {
+        padding: 22px 8px 20px;
+        border-radius: 16px;
+      }
+
+      .subtitle {
+        margin-bottom: 30px;
+      }
+
+      .deadline-card {
+        padding: 16px 14px;
+        font-size: 14px;
+      }
+
+      .aoe {
+        flex-basis: 100%;
+      }
+
+      footer {
+        margin-top: 36px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main class="page">
+
+    <!-- Conference label -->
+    <div class="badge" aria-label="CVPR conference">
+      <span class="dot" aria-hidden="true"></span>
+      Computer Vision and Pattern Recognition
+    </div>
+
+
+    <!-- Main title -->
+    <h1>
+      CVPR <span class="gradient-text">2027</span>
+    </h1>
+
+
+    <!-- Subtitle -->
+    <p class="subtitle">
+      Countdown to my personal abstract submission deadline.
+      <strong>Two weeks ahead.</strong>
+      Every second counts.
+    </p>
+
+
+    <!-- Countdown -->
+    <section
+      class="countdown"
+      aria-label="Countdown to personal CVPR 2027 deadline"
+    >
+
+      <div class="unit">
+        <span class="number" id="days">000</span>
+        <span class="label">Days</span>
+      </div>
+
+      <div class="unit">
+        <span class="number" id="hours">00</span>
+        <span class="label">Hours</span>
+      </div>
+
+      <div class="unit">
+        <span class="number" id="minutes">00</span>
+        <span class="label">Minutes</span>
+      </div>
+
+      <div class="unit">
+        <span class="number" id="seconds">00</span>
+        <span class="label">Seconds</span>
+      </div>
+
+    </section>
+
+
+    <!-- Personal deadline -->
+    <div class="deadline-card personal-deadline">
+
+      <span class="deadline-label">
+        My Deadline · 2 Weeks Early
+      </span>
+
+      <br>
+
+      <strong>
+        October 27, 2026 · 11:59:59 PM
+      </strong>
+
+      <span class="aoe">
+        Anywhere on Earth (UTC−12)
+      </span>
+
+    </div>
+
+
+    <!-- Official deadline reminder -->
+    <div class="official-note">
+      Official CVPR 2027 paper registration deadline:
+      <strong>November 10, 2026 AoE</strong>
+    </div>
+
+
+    <!-- Dynamic status -->
+    <div id="status" role="status" aria-live="polite">
+      Calculating time remaining…
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+
+      Personal countdown ends exactly
+      <strong>14 days before</strong>
+      the official deadline.
+
+      <br>
+
+      Official dates:
+      <a
+        href="https://cvpr.thecvf.com/Conferences/2027/CallForPapers"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        CVPR 2027 Call for Papers
+      </a>.
+
+    </footer>
+
+  </main>
+
+
+  <script>
+
+    /*
+      =====================================================
+      CVPR 2027 DEADLINES
+      =====================================================
+
+      OFFICIAL PAPER REGISTRATION DEADLINE:
+
+          November 10, 2026
+          11:59:59 PM AoE
+
+      AoE = Anywhere on Earth = UTC-12
+
+
+      -----------------------------------------------------
+      PERSONAL DEADLINE
+      -----------------------------------------------------
+
+      We intentionally move the deadline EXACTLY
+      14 days earlier:
+
+          October 27, 2026
+          11:59:59 PM AoE
+
+
+      -----------------------------------------------------
+      UTC CONVERSION
+      -----------------------------------------------------
+
+      October 27, 2026
+      23:59:59 UTC-12
+
+      is equivalent to:
+
+      October 28, 2026
+      11:59:59 UTC
+
+
+      Therefore the absolute timestamp used below is:
+
+          2026-10-28T11:59:59Z
+
+      This guarantees that everyone sees the same
+      countdown regardless of their local timezone.
+      =====================================================
+    */
+
+
+    const PERSONAL_DEADLINE =
+      new Date("2026-10-28T11:59:59Z");
+
+
+    /*
+      DOM elements
+    */
+
+    const daysElement =
+      document.getElementById("days");
+
+    const hoursElement =
+      document.getElementById("hours");
+
+    const minutesElement =
+      document.getElementById("minutes");
+
+    const secondsElement =
+      document.getElementById("seconds");
+
+    const statusElement =
+      document.getElementById("status");
+
+
+    /*
+      Add leading zeroes.
+
+      Examples:
+
+      pad(5)    -> "05"
+      pad(5, 3) -> "005"
+    */
+
+    function pad(value, digits = 2) {
+      return String(value).padStart(digits, "0");
+    }
+
+
+    /*
+      Main countdown function
+    */
+
+    function updateCountdown() {
+
+      const now = new Date();
+
+      const remaining =
+        PERSONAL_DEADLINE.getTime() - now.getTime();
+
+
+      /*
+        Personal deadline has passed.
+      */
+
+      if (remaining <= 0) {
+
+        daysElement.textContent = "000";
+        hoursElement.textContent = "00";
+        minutesElement.textContent = "00";
+        secondsElement.textContent = "00";
+
+        statusElement.textContent =
+          "Personal deadline reached — pencils down.";
+
+        statusElement.classList.add("passed");
+
+        document.title =
+          "Personal Deadline Reached — CVPR 2027";
+
+        return;
+      }
+
+
+      /*
+        Convert milliseconds into complete seconds.
+
+        Math.ceil() is used so the countdown does not
+        display 00:00:00 while fractional time remains.
+      */
+
+      const totalSeconds =
+        Math.ceil(remaining / 1000);
+
+
+      /*
+        Calculate individual units.
+      */
+
+      const days =
+        Math.floor(
+          totalSeconds / (60 * 60 * 24)
+        );
+
+      const hours =
+        Math.floor(
+          (totalSeconds % (60 * 60 * 24))
+          / (60 * 60)
+        );
+
+      const minutes =
+        Math.floor(
+          (totalSeconds % (60 * 60))
+          / 60
+        );
+
+      const seconds =
+        totalSeconds % 60;
+
+
+      /*
+        Update page.
+      */
+
+      daysElement.textContent =
+        pad(days, 3);
+
+      hoursElement.textContent =
+        pad(hours);
+
+      minutesElement.textContent =
+        pad(minutes);
+
+      secondsElement.textContent =
+        pad(seconds);
+
+
+      /*
+        Status message
+      */
+
+      statusElement.textContent =
+        "14-day buffer activated · Countdown synchronized to AoE";
+
+
+      /*
+        Dynamic browser-tab title.
+      */
+
+      document.title =
+        `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s — CVPR 2027`;
+
+    }
+
+
+    /*
+      Update immediately when page loads.
+    */
+
+    updateCountdown();
+
+
+    /*
+      Refresh four times per second.
+
+      The visible timer still changes at second
+      precision, but frequent refreshes make the
+      second transitions accurate and responsive.
+    */
+
+    setInterval(updateCountdown, 250);
+
+  </script>
+
+</body>
+</html>
